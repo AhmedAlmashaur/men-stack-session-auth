@@ -50,10 +50,14 @@ app.get('/ejs-testing', (req, res) => {
 });
 
 
+/* -------------- Controllers ---------------- */
+const authController = require("./controllers/auth.js");
+app.use('/auth', authController);
+
 /* -------------- Routes ---------------- */
 //GET
 app.get('/', (req, res) => {
-    res.render('pages/index');
+    res.render('index');
 });
 
 
