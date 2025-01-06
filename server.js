@@ -51,6 +51,10 @@ app.get('/ejs-testing', (req, res) => {
 
 
 /* -------------- Routes ---------------- */
+//GET
+app.get('/', (req, res) => {
+    res.render('pages/index');
+});
 
 
 
