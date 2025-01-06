@@ -1,0 +1,33 @@
+{
+  "name": "intro-to-express-lab",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AhmedAlmashaur/intro-to-express-lab.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/AhmedAlmashaur/intro-to-express-lab/issues"
+  },
+  "homepage": "https://github.com/AhmedAlmashaur/intro-to-express-lab#readme",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "method-override": "^3.0.0",
+    "mongodb": "^6.12.0",
+    "mongoose": "^8.9.3",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.9"
+  },
+  "description": ""
+}
