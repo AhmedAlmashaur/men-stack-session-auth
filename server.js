@@ -1,4 +1,4 @@
-/* -------------- Express initialization ---------------- */
+/* -------------- Express-initialization ---------------- */
 const express = require('express');
 const app = express();
 const port = 3000;
@@ -13,23 +13,28 @@ const morgan = require('morgan');
 app.use(morgan('dev'));
 
 
-/* -------------- Body Parser ---------------- */
+/* -------------- Body-Parser ---------------- */
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-/* -------------- EJS initialization ---------------- */
+/* -------------- Express-session ---------------- */
+const session = require('express-session');
+
+
+
+/* -------------- EJS-Initialization ---------------- */
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 
 
-/* -------------- Method Override ---------------- */
+/* -------------- Method-Override ---------------- */
 const methodOverride = require('method-override');
 app.use(methodOverride('_method'));
 
 
-/* -------------- mongoose ---------------- */
+/* -------------- Mongoose ---------------- */
 const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Database connected"))
@@ -37,8 +42,20 @@ mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopol
 
 
 /* -------------- Middleware ---------------- */
+//urlencoded
 app.use(express.urlencoded({ extended: true }));
 
+// Session creation
+app.use(methodOverride("_method"));
+app.use(morgan('dev'));
+// new
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
 /* -------------- Express-tests ---------------- */
 app.get('/connection-testing', (req, res) => {
@@ -54,15 +71,27 @@ app.get('/ejs-testing', (req, res) => {
 const authController = require("./controllers/auth.js");
 app.use('/auth', authController);
 
+
 /* -------------- Routes ---------------- */
 //GET
-app.get('/', (req, res) => {
-    res.render('index');
-});
 
+    //Home page
+app.get("/", (req, res) => {
+    res.render("index.ejs", {
+      user: req.session.user,
+    });
+  });
 
+    //vip-lounge
+  app.get("/vip-lounge", (req, res) => {
+    if (req.session.user) {
+      res.send(`Welcome to the party ${req.session.user.username}.`);
+    } else {
+      res.send("Sorry, no guests allowed.");
+    }
+  });
 
-/* -------------- app listener ---------------- */
+/* -------------- App-Listener ---------------- */
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
